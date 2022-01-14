@@ -333,16 +333,7 @@
 
             // RAW文件讀取
             loadLocalRawFile('./raw/CTchest_64_64_64_uint8.raw', (result) => {
-                let width = 64
-                let height = 64
-                let depth = 64
-                let bit = 8
 
-                let data = Uint8ClampedArray(result)
-
-                field = new ScaleField(width,height,depth,data,arg)
-
-                controlview.updateVolumeDate(field)
             })
         }
 
@@ -351,9 +342,7 @@
             controlView = new ControlView(document.getElementById('palette'), arg)
 
             //當調色盤的參數變更時，觸發事件
-            controlView.addEventListener('change', () => {
-                modelView.renderVolume(field.alpha,getColormap().arg)
-            })
+            controlView.addEventListener('change', () => {})
 
             init()
         }

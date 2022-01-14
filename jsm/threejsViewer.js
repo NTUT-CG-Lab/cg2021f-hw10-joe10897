@@ -87,7 +87,7 @@ class threejsViewer {
             }
         }
 
-        //ï¿½Ñ¼vï¿½ï¿½ï¿½ï¿½Æ¥Í¦ï¿½ï¿½Ò«ï¿½
+        //¥Ñ¼v¹³¸ê®Æ¥Í¦¨¼Ò«¬
         this.renderVolume = function (volume, colormap, arg) {
 
             const name = 'volume'
@@ -98,19 +98,6 @@ class threejsViewer {
 
             if (mesh == null) {
                 //first time initial
-                //let geometry = new THREE.BoxGeometry(...)
-                let shader = VolumeRenderShader1
-
-                let texture = new THREE.DataTexture3D(volume,alpha,dims[0],dims[1],dims[2])
-                //texture.format = THREE.LuminanceAlphaFormat
-                /texture.type=//...
-
-                let cmtexture = new DataTexture()
-
-                let material = new THREE.ShaderMaterial({
-                    uniforms:
-                })
-
             }
             else {
                 // partial parameters update
