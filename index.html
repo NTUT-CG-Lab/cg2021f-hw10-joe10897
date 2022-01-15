@@ -326,14 +326,26 @@
 
             //MIPS or ISO
             document.querySelectorAll('input[name=rtype]').forEach((option) => {
-                option.addEventListener('click', (evt) => { })
+                option.addEventListener('click', (evt) => {
+                    arg.renderType = 0 //MIPS:0 ISO:1
+                    controlView.updatRGBA()
+                })
             })
 
             arg.renderType = 0
 
             // RAW文件讀取
             loadLocalRawFile('./raw/CTchest_64_64_64_uint8.raw', (result) => {
+                let widget = 64
+                let height = 64
+                let depth = 64
+                let bit = 8
 
+                let data = Unit8ClampedArray(result)
+
+                field = new ScaleField(width, height, depth, data, arg)
+
+                controlView.updateVolumeData(field)
             })
         }
 
@@ -343,6 +355,7 @@
 
             //當調色盤的參數變更時，觸發事件
             controlView.addEventListener('change', () => {})
+                modelView.renderVolumr(field.alpha, getColormap(), arg)
 
             init()
         }
