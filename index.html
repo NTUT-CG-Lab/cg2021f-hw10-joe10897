@@ -336,14 +336,14 @@
 
             // RAW文件讀取
             loadLocalRawFile('./raw/CTchest_64_64_64_uint8.raw', (result) => {
-                let widget = 64
+                let width = 64
                 let height = 64
                 let depth = 64
                 let bit = 8
 
-                let data =   Uint8ClampedArray(result)
+                let  data =  Uint8ClampedArray(result)
 
-                var field = new ScaleField(width, height, depth, data, arg)
+                field = new ScaleField(width, height, depth, data, arg)
 
                 controlView.updateVolumeData(field)
             })
@@ -360,10 +360,10 @@
                     return;
                 }
 
-                console.log(arg2.rgba)
-                arg2 =arg
-                modelView.renderVolume(field, getColormap(), arg2)
-                console.log(arg2.rgba)
+                console.log(arg.rgba)
+
+                modelView.renderVolume(field, getColormap(), arg)
+                console.log(arg.rgba)
             })
                 
 
