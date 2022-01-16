@@ -101,14 +101,17 @@ class threejsViewer {
                 //first time initial
                 let geometry = new THREE.BoxGeometry(dims[0], dims[1], dims[2]);
                 geometry.translate(dims[0] / 2, dims[1] / 2, dims[2] / 2);
+                
                 let shader = VolumeRenderShader1;
-
-                let texture = new THREE.DataTexture3D(volume.alpha,dims[0],dims[1],dims[2])
+                const texture = new THREE.DataTexture3D(volume.alpha,dims[0],dims[1],dims[2])
                 texture.format = THREE.RedFormat
                 texture.type = THREE.UnsignedByteType
                 texture.minFilter = texture.magFilter = THREE.LinearFilter;
 
-                let cmtexture = new THREE.DataTexture(colormap, 256, 1);
+                let cmtexture = new THREE.DataTexture(colormap, 256, 1)
+                cmtexture.format = THREE.RedFormat
+                cmtexture.type = THREE.UnsignedByteType
+                
 
                 let material = new THREE.ShaderMaterial({
                     uniforms: {
@@ -127,21 +130,24 @@ class threejsViewer {
                 mesh = new THREE.Mesh(geometry,material);
                 mesh.name = name
                 mesh.position.set(0,0,0);
-                mesh.scale.set(scale.scale,scale);
-                this.scene.add(mesh);
+                mesh.scale.set(scale,scale,scale);
+                console.log(this.scene)
+                //this.scene.add(mesh);
 
             }
             else {
                 uniforms = mesh.material.uniforms //need
-
+                unifroms['u_data'].value.image = {data: volume.alpha, width: dims[0], height: dims[1], depth: dims[2]}
+                uniforms['u_data'].value.needUpdate = true;
+                uniforms['u_cmdata'].value.image.data = colormap;
+                uniforms['u_cmdata'].value.needUpdate = true;
+                uniforms['u_renderstyle'].value = arg.renderType;
+                console.log("test")
                 ///uniforms['u_cmdata'].value.image = {data:colormap, width:256, height:1}
                 ///uniforms['u_cmdata'].value = new DataTexture(colormap,256,1)
-                ///or
-                unifroms['u_cmdata'].value.image = {data:colormap};
                 /// partial parameters update
                 ///uniforms['u_cmdata'].value.image.data = colormap;
-                uniforms['u_cmdata'].value.needsUpdate = true;
-                uniforms['u_renderstyle'].value = arg.renderType;
+                
             }
 
             if (volume.used) {
@@ -149,18 +155,18 @@ class threejsViewer {
                 if (uniforms['u_sizeEnable'] == 0){
 
                     ///const texture = new THREE.DataTexture3D(volume.sizeData, dims[0], dims[1], dims[2]);
-                    let texture = new THREE.DataTexture3D(volume.alpha, dims[0], dims[1], dims[2],THREE.RGBAFormat);
+                    let texture = new THREE.DataTexture3D(volume.sizeData, dims[0], dims[1], dims[2],THREE.RGBAFormat);
                     
-                    texture.format = THREE.RedFormat; //THREE.LuminanceFormat
-                    texture.type = THREE.UnsignedByteType;
-                    texture.minFilter = texture.magFilter = THREE.LinearFilter;
+                    texture.format = THREE.RedFormat //THREE.LuminanceFormat
+                    texture.type = THREE.UnsignedByteType
+                    //texture.minFilter = texture.magFilter = THREE.LinearFilter
 
-                    uniforms['u_sizeEnable'].value = 1;
-                    uniforms['u_sizeData'].value = texture;
+                    uniforms['u_sizeEnable'].value = 1
+                    uniforms['u_sizeData'].value = texture
                 }
                 else {
                     uniforms['u_sizeData'].value.image = {data:volume.sizeData}
-                    uniforms['u_sizeData'].value.needsUpdate = true; //needupdate
+                    uniforms['u_sizeData'].value.needUpdate = true //needupdate
                 }
             }
            

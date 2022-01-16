@@ -351,15 +351,20 @@
 
         window.onload = () => {
             modelView = new threejsViewer(document.body)
-            controlView = new ControlView(document.getElementById('palette'), arg)
-
+            controlView = new ControlView(document.getElementById('palette'), arg);
+            let i=1
+            console.log(i)
             //當調色盤的參數變更時，觸發事件
             controlView.addEventListener('change', () => {
-                if(field != null){
-
-                    modelView.renderVolume(field, getColormap(), arg)
+                if(field == null){
+                    return;
                 }
-            })
+
+                console.log(arg2.rgba)
+                arg2 =arg
+                modelView.renderVolume(field, getColormap(), arg2);
+                console.log(arg2.rgba)
+            });
                 
 
             init()
