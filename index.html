@@ -341,17 +341,17 @@
                 let depth = 64
                 let bit = 8
 
-                let data = Unit8ClampedArray(result)
+                let data =   Uint8ClampedArray(result)
 
-                field = new ScaleField(width, height, depth, data, arg)
+                var field = new ScaleField(width, height, depth, data, arg)
 
                 controlView.updateVolumeData(field)
             })
         }
 
         window.onload = () => {
-            modelView = new threejsViewer(document.body)
-            controlView = new ControlView(document.getElementById('palette'), arg);
+            var modelView = new threejsViewer(document.body)
+            var controlView = new ControlView(document.getElementById('palette'), arg);
             let i=1
             console.log(i)
             //當調色盤的參數變更時，觸發事件
@@ -362,9 +362,9 @@
 
                 console.log(arg2.rgba)
                 arg2 =arg
-                modelView.renderVolume(field, getColormap(), arg2);
+                modelView.renderVolume(field, getColormap(), arg2)
                 console.log(arg2.rgba)
-            });
+            })
                 
 
             init()
